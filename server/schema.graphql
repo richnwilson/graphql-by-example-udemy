@@ -1,0 +1,56 @@
+"""
+Leave all top level queriesa as nullable i.e. don't add '!'
+"""
+type Query {
+    job(_id: ID!): Job
+    jobs(limit: Int, skip: Int): JobSubList
+    company(id: ID!): Company
+}
+
+"""
+Used to Create, Update or Delete records
+"""
+type Mutation {
+    createJob(input: createJobInput!): Job
+    deleteJob(_id: ID!): Job
+    updateJob(input: updateJobInput!): Job
+}
+
+type JobSubList { 
+    items: [Job!]!,
+    totalCount: Int!
+}
+
+input createJobInput {
+    title: String!
+    description: String!
+}
+
+input updateJobInput {
+    _id: ID!
+    title: String!
+    description: String!    
+}
+
+"""
+Test are OUTPUT types, by default as opposed to input above ^^^
+"""
+
+type Company {
+    id: ID!,
+    name: String!,
+    description: String!
+    jobs: [Job!]!
+}
+
+"""
+Job object for each job
+"""
+type Job {
+    _id: ID! # This code comment is used to indicate that ! is a required field
+    title: String!
+    description: String!
+    """The __date__ when the job was created in ISO format i.e. `2021-11-23T12.23.45.000Z`"""
+    date: String!
+    company: Company! # This field is actually an object association to the type Company above
+}
