@@ -20,6 +20,7 @@ export const getCompany = async (id) => {
     - it is meant to save on # of data calls
 */
 export const companyLoader = new DataLoader(async (ids) => {
+    console.log('[companyLoader] ids:', ids);
     const companies = await Company.find({id: ids}).lean().exec();
     return ids.map((id) => companies.find((company) => company.id === id));
 })

@@ -48,6 +48,9 @@ const getContext = async ({req}) => {
 }
 
 app.use('/graphql',apolloMiddleware(apolloServer, { context: getContext}));
+// This stops the Cannot find module 'ico' error, which happens when a new instance of a browser is initiated. 
+// - this just declares the route so it's doesn't - no code functionality needed
+app.get('/favico.ico' , function(req , res){/*code*/});
 
 app.use((req, res) => {
     res.status(404).render(`Path- /${req.url} - not found`)
